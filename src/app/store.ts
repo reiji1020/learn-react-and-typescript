@@ -1,9 +1,11 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import counterReducer from '../features/counter/counterSlice';
+import cakeListReducer from '../reducer/cakeListReducer';
 
 export const store = configureStore({
   reducer: {
-    counter: counterReducer,
+    counter: counterReducer, // サンプルのReducerなので消してもよい
+    cakeList: cakeListReducer,
   },
 });
 
@@ -14,4 +16,4 @@ export type AppThunk<ReturnType = void> = ThunkAction<
   RootState,
   unknown,
   Action<string>
->;
+>; 

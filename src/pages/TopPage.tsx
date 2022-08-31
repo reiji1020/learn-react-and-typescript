@@ -14,6 +14,8 @@ import commonStyle from "../const/commonStyle";
 import ListTable from "../components/ListTable";
 import { cakeListSetting } from "../const/cakeListSetting";
 import { materialListSetting } from "../const/materialListSetting";
+import { setCakeList, cakeStockInfo } from "../reducer/cakeListReducer";
+import { useDispatch, useSelector } from "react-redux";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -52,6 +54,15 @@ function a11yProps(index: number) {
 export default function TopPage() {
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
+  const dispatch = useDispatch();
+  const setCakeListInitialize = React.useCallback(() => {
+    dispatch(setCakeList());
+  }, [dispatch])
+  const cakeInfo = useSelector(cakeStockInfo);
+
+  React.useEffect(() => {
+    setCakeListInitialize()
+  })
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -93,7 +104,7 @@ export default function TopPage() {
         <TabPanel value={value} index={0} dir={theme.direction}>
             <ListTable
               tableSetting={cakeListSetting.tableSetting}
-              itemData={cakeListSetting.initialList}
+              itemData={cakeInfo}
             ></ListTable>
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
