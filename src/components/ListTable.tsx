@@ -14,9 +14,10 @@ import { cakeTableInfo, cakeInfo } from "../const/cakeListSetting";
 type Props = {
   tableSetting: materialTableInfo[] | cakeTableInfo[];
   itemData: materialInfo[] | cakeInfo[];
+  sellHandler?: () => void;
 };
 
-const ListTable: React.FC<Props> = ({ tableSetting, itemData }) => {
+const ListTable: React.FC<Props> = ({ tableSetting, itemData, sellHandler }) => {
   return (
     <Table>
       <TableHead>
@@ -36,7 +37,7 @@ const ListTable: React.FC<Props> = ({ tableSetting, itemData }) => {
                     <Button
                       variant="contained"
                       color="primary"
-                      // onClick={props.sellHandler}
+                      onClick={sellHandler}
                     >
                       1つ売る
                     </Button>

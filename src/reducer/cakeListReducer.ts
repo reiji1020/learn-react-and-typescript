@@ -17,12 +17,17 @@ export const cakeList = createSlice({
     reducers: {
         setCakeList: (state) => {
             state.cakeList = cakeListSetting.initialList
+        },
+        sellCake: (state) => {
+            state.cakeList[0].stock -= 1;
+            state.funds += 350;
         }
     }
 })
 
-export const { setCakeList } = cakeList.actions;
+export const { setCakeList, sellCake } = cakeList.actions;
 
 export const cakeStockInfo = (state: RootState) => state.cakeList.cakeList;
+export const fundsState = (state: RootState) => state.cakeList.funds;
 
 export default cakeList.reducer;

@@ -14,7 +14,7 @@ import commonStyle from "../const/commonStyle";
 import ListTable from "../components/ListTable";
 import { cakeListSetting } from "../const/cakeListSetting";
 import { materialListSetting } from "../const/materialListSetting";
-import { setCakeList, cakeStockInfo } from "../reducer/cakeListReducer";
+import { setCakeList, sellCake, cakeStockInfo, fundsState } from "../reducer/cakeListReducer";
 import { useDispatch, useSelector } from "react-redux";
 
 interface TabPanelProps {
@@ -59,10 +59,11 @@ export default function TopPage() {
     dispatch(setCakeList());
   }, [dispatch])
   const cakeInfo = useSelector(cakeStockInfo);
+  const fundsInfo = useSelector(fundsState);
 
   React.useEffect(() => {
     setCakeListInitialize()
-  })
+  },[])
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -82,6 +83,9 @@ export default function TopPage() {
           </Typography>
         </Toolbar>
       </AppBar>
+      <Typography variant="h3" color="secondary">
+        現在の資金：{fundsInfo}円
+      </Typography>
       {/* main contents */}
       <AppBar position="static" color="default">
         <Tabs
@@ -101,10 +105,12 @@ export default function TopPage() {
         index={value}
         onChangeIndex={handleChangeIndex}
       >
+        
         <TabPanel value={value} index={0} dir={theme.direction}>
             <ListTable
               tableSetting={cakeListSetting.tableSetting}
               itemData={cakeInfo}
+              sellHandler={() => dispatch(sellCake())}
             ></ListTable>
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
