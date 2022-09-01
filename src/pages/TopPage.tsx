@@ -13,7 +13,7 @@ import KitchenIcon from "@mui/icons-material/Kitchen";
 import commonStyle from "../const/commonStyle";
 import ListTable from "../components/ListTable";
 import { cakeListSetting } from "../const/cakeListSetting";
-import { materialListSetting } from "../const/materialListSetting";
+// import { materialListSetting } from "../const/materialListSetting";
 import { setCakeList, sellCake, cakeStockInfo, fundsState } from "../reducer/cakeListReducer";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -73,6 +73,11 @@ export default function TopPage() {
     setValue(index);
   };
 
+  const handleSellCake = (index: number) => {
+    dispatch(sellCake(index))
+  }
+
+
   return (
     <ThemeProvider theme={commonStyle}>
       {/*AppBar*/}
@@ -110,14 +115,14 @@ export default function TopPage() {
             <ListTable
               tableSetting={cakeListSetting.tableSetting}
               itemData={cakeInfo}
-              sellHandler={() => dispatch(sellCake())}
+              sellHandler={handleSellCake}
             ></ListTable>
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
-            <ListTable
+            {/* <ListTable
               tableSetting={materialListSetting.tableSetting}
               itemData={materialListSetting.initialList}
-            ></ListTable>
+            ></ListTable> */}
         </TabPanel>
       </SwipeableViews>
     </ThemeProvider>

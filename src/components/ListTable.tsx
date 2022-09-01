@@ -14,7 +14,7 @@ import { cakeTableInfo, cakeInfo } from "../const/cakeListSetting";
 type Props = {
   tableSetting: materialTableInfo[] | cakeTableInfo[];
   itemData: materialInfo[] | cakeInfo[];
-  sellHandler?: () => void;
+  sellHandler: (index:number) => void;
 };
 
 const ListTable: React.FC<Props> = ({ tableSetting, itemData, sellHandler }) => {
@@ -28,16 +28,16 @@ const ListTable: React.FC<Props> = ({ tableSetting, itemData, sellHandler }) => 
         </TableRow>
       </TableHead>
       <TableBody>
-        {itemData.map((item: materialInfo | cakeInfo) => (
+        {itemData.map((item: materialInfo | cakeInfo, index: number) => (
           <TableRow key={item.name}>
             {tableSetting.map(
-              (column: materialTableInfo | cakeTableInfo, index: number) =>
+              (column: materialTableInfo | cakeTableInfo) =>
                 column.data === "sell" ? (
                   <TableCell align="center" component="th" scope="row">
                     <Button
                       variant="contained"
                       color="primary"
-                      onClick={sellHandler}
+                      onClick={() => sellHandler(index)}
                     >
                       1つ売る
                     </Button>

@@ -7,20 +7,20 @@ type CakeState = {
     funds: number
 }
 
-
 export const cakeList = createSlice({
     name: 'cakeList',
     initialState: {
         cakeList: [],
         funds: 10000,
+        pickupCakeIndex: 0
     } as CakeState,
     reducers: {
         setCakeList: (state) => {
             state.cakeList = cakeListSetting.initialList
         },
-        sellCake: (state) => {
-            state.cakeList[0].stock -= 1;
-            state.funds += 350;
+        sellCake: (state, action) => {
+            state.cakeList[action.payload].stock -= 1;
+            state.funds += state.cakeList[action.payload].price;
         }
     }
 })
