@@ -13,8 +13,9 @@ import KitchenIcon from "@mui/icons-material/Kitchen";
 import commonStyle from "../const/commonStyle";
 import ListTable from "../components/ListTable";
 import { cakeListSetting } from "../const/cakeListSetting";
-// import { materialListSetting } from "../const/materialListSetting";
-import { setCakeList, sellCake, cakeStockInfo, fundsState } from "../reducer/cakeListReducer";
+import { materialListSetting } from "../const/materialListSetting";
+import { setCakeList, sellCake, makeCake, cakeStockInfo, fundsState } from "../reducer/cakeListReducer";
+import { setMaterialList, consumeMaterial, materialStockInfo } from "../reducer/materialListReducer";
 import { useDispatch, useSelector } from "react-redux";
 
 interface TabPanelProps {
@@ -55,14 +56,16 @@ export default function TopPage() {
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
   const dispatch = useDispatch();
-  const setCakeListInitialize = React.useCallback(() => {
+  const setListInitialize = React.useCallback(() => {
     dispatch(setCakeList());
+    dispatch(setMaterialList());
   }, [dispatch])
   const cakeInfo = useSelector(cakeStockInfo);
   const fundsInfo = useSelector(fundsState);
+  const materialInfo = useSelector(materialStockInfo);
 
   React.useEffect(() => {
-    setCakeListInitialize()
+    setListInitialize();
   },[])
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -73,8 +76,13 @@ export default function TopPage() {
     setValue(index);
   };
 
-  const handleSellCake = (index: number) => {
+  const sellCakeAction = (index: number) => {
     dispatch(sellCake(index))
+  }
+
+  const makeCakeAction = (index: number) => {
+    dispatch(makeCake(index))
+    dispatch(consumeMaterial(index))
   }
 
 
@@ -115,14 +123,17 @@ export default function TopPage() {
             <ListTable
               tableSetting={cakeListSetting.tableSetting}
               itemData={cakeInfo}
-              sellHandler={handleSellCake}
+              sellHandler={sellCakeAction}
+              refillHandler={makeCakeAction}
             ></ListTable>
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
-            {/* <ListTable
+            <ListTable
               tableSetting={materialListSetting.tableSetting}
-              itemData={materialListSetting.initialList}
-            ></ListTable> */}
+              itemData={materialInfo}
+              sellHandler={()=>{}}
+              refillHandler={() => {}}
+            ></ListTable>
         </TabPanel>
       </SwipeableViews>
     </ThemeProvider>
