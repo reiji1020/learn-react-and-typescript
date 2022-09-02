@@ -15,7 +15,7 @@ type Props = {
   tableSetting: materialTableInfo[] | cakeTableInfo[];
   itemData: materialInfo[] | cakeInfo[];
   sellHandler: (index:number) => void;
-  refillHandler: (index: number) => void;
+  refillHandler: ((index: number) => void) | ((index: number, price: number) => void);
 };
 
 const ListTable: React.FC<Props> = ({ tableSetting, itemData, sellHandler, refillHandler }) => {
@@ -48,7 +48,7 @@ const ListTable: React.FC<Props> = ({ tableSetting, itemData, sellHandler, refil
                     <Button
                       variant="contained"
                       color="primary"
-                      onClick={() => refillHandler(index)}
+                      onClick={() => refillHandler(index, item.price)}
                     >
                       1つ補充する
                     </Button>

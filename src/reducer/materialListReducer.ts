@@ -52,11 +52,14 @@ export const materialList = createSlice({
                 default:
                     return state;
             }
+        },
+        buyMaterial: (state, action) => {
+            state.materialList[action.payload].stock += 1;
         }
     }
 })
 
-export const { setMaterialList, consumeMaterial } = materialList.actions;
+export const { setMaterialList, consumeMaterial, buyMaterial } = materialList.actions;
 
 export const materialStockInfo = (state: RootState) => state.materialList.materialList;
 

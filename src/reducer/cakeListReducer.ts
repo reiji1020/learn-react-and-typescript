@@ -23,11 +23,14 @@ export const cakeList = createSlice({
         },
         makeCake: (state, action) => {
             state.cakeList[action.payload].stock += 1;
+        },
+        paymentMaterial: (state, action) => {
+            state.funds -= action.payload
         }
     }
 })
 
-export const { setCakeList, sellCake, makeCake } = cakeList.actions;
+export const { setCakeList, sellCake, makeCake, paymentMaterial } = cakeList.actions;
 
 export const cakeStockInfo = (state: RootState) => state.cakeList.cakeList;
 export const fundsState = (state: RootState) => state.cakeList.funds;

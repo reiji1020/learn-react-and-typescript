@@ -14,8 +14,8 @@ import commonStyle from "../const/commonStyle";
 import ListTable from "../components/ListTable";
 import { cakeListSetting } from "../const/cakeListSetting";
 import { materialListSetting } from "../const/materialListSetting";
-import { setCakeList, sellCake, makeCake, cakeStockInfo, fundsState } from "../reducer/cakeListReducer";
-import { setMaterialList, consumeMaterial, materialStockInfo } from "../reducer/materialListReducer";
+import { setCakeList, sellCake, makeCake, cakeStockInfo, fundsState, paymentMaterial } from "../reducer/cakeListReducer";
+import { setMaterialList, consumeMaterial, materialStockInfo, buyMaterial } from "../reducer/materialListReducer";
 import { useDispatch, useSelector } from "react-redux";
 
 interface TabPanelProps {
@@ -85,6 +85,10 @@ export default function TopPage() {
     dispatch(consumeMaterial(index))
   }
 
+  const buyMaterialAction = (index: number, price: number) => {
+    dispatch(buyMaterial(index))
+    dispatch(paymentMaterial(price))
+  }
 
   return (
     <ThemeProvider theme={commonStyle}>
@@ -132,7 +136,7 @@ export default function TopPage() {
               tableSetting={materialListSetting.tableSetting}
               itemData={materialInfo}
               sellHandler={()=>{}}
-              refillHandler={() => {}}
+              refillHandler={buyMaterialAction}
             ></ListTable>
         </TabPanel>
       </SwipeableViews>
